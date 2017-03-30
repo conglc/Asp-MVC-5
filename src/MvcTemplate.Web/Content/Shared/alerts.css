@@ -1,0 +1,24 @@
+﻿.public .alerts .alert {
+  text-align: center;
+}
+.alerts {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.alerts .alert {
+  text-align: justify;
+  padding: 8px 15px;
+  margin: 0;
+}
+.alerts .alert + .alert {
+  margin-top: 5px;
+}
+.alerts .alert span {
+  vertical-align: middle;
+  display: table-cell;
+  float: none;
+}
+.alerts .alert span:first-of-type {
+  padding-right: 10px;
+  width: 100%;
+}

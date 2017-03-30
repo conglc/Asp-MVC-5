@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html lang="@CultureInfo.CurrentUICulture.TwoLetterISOLanguageName">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.ico")">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(ViewBag.Title ?? ResourceProvider.GetPageTitle(ViewContext.RouteData.Values))</title>
+
+    @Styles.Render("~/content/private/bundle")
+</head>
+<body class="private">
+    @Html.Partial("_Header")
+    @Html.Partial("MvcDatalist/_Dialog")
+    <div class="menu">
+        <div class="menu-search">
+            <input placeholder="@(Actions.Search)..." />
+        </div>
+        @Html.Partial("_SiteMap", MvcSiteMap.Provider.GetSiteMap(ViewContext))
+    </div>
+    <div class="content-container">
+        <div class="separator"></div>
+
+        @Html.Partial("_Breadcrumb")
+
+        <div class="separator"></div>
+
+        <div class="container-fluid">
+            <div class="content row">
+                <div class="alerts col-xs-12">
+                    @foreach (Alert alert in TempData["Alerts"] as AlertsContainer)
+                    {
+                        <div class="alert alert-@alert.Type.ToString().ToLowerInvariant()" data-timeout="@alert.Timeout">
+                            <span>@alert.Message</span><span class="close">×</span>
+                        </div>
+                    }
+                </div>
+
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        @DateTime.Now.Year &copy; All rights reserved.
+    </div>
+
+    @Scripts.Render("~/scripts/private/bundle")
+</body>
+</html>

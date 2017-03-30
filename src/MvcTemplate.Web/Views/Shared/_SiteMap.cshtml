@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MvcSiteMapNode>
+
+@SiteMap(Model)
+
+@helper SiteMap(IEnumerable<MvcSiteMapNode> nodes)
+{
+    <ul>
+        @foreach (MvcSiteMapNode node in nodes)
+        {
+            String link = node.Action != null ? Url.Action(node.Action, node.Controller, new { area = node.Area }) : "#";
+            String toggle = node.Action == null ? "<i class='arrow fa fa-chevron-right'></i>" : "";
+            String menu = node.HasActiveChildren ? "has-active open" : "";
+            menu += node.Children.Any() ? " submenu" : "";
+            menu += node.IsActive ? " active" : "";
+            menu = menu.Trim();
+
+            <li class="@menu">
+                <a href="@link">
+                    <i class="menu-icon @node.IconClass"></i>
+                    <span>@ResourceProvider.GetSiteMapTitle(node.Area, node.Controller, node.Action)</span>
+                    @Html.Raw(toggle)
+                </a>
+                @if (node.Children.Any())
+                {
+                    @SiteMap(node.Children)
+                }
+            </li>
+        }
+    </ul>
+}
